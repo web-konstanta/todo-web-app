@@ -1,0 +1,40 @@
+table {
+	table-layout: fixed;
+	width: 100%;
+	border-collapse: collapse;
+	border: none;
+	text-align: left;
+}
+
+thead {
+	border-bottom: 3px solid #000000;
+}
+
+thead th:nth-child(1) {
+	width: 10%;
+}
+
+thead th:nth-child(2) {
+	width: 35%;
+}
+
+thead th:nth-child(3) {
+	width: 20%;
+}
+
+thead th:nth-child(4) {
+	width: 10%;
+}
+
+thead th:nth-child(5) {
+	width: 10%;
+}
+
+tbody tr {
+	border-bottom: 1px solid #000000;
+}
+
+th,
+td {
+	padding: 20px;
+}
