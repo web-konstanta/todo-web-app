@@ -1,10 +1,12 @@
-import './App.css';
+import { BrowserRouter } from 'react-router-dom';
+import AppRouter from './AppRouter';
+import './App.css'
 
 function App() {
   return (
-    <div className="App">
-      Todo Web Application
-    </div>
+    <BrowserRouter>
+      <AppRouter />
+    </BrowserRouter>
   );
 }
 

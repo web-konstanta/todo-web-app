@@ -1,0 +1,9 @@
+.addTask {
+	float: right;
+	padding: 7px;
+	background-color: white;
+	border-radius: 5px;
+	border: 2px solid rgb(34, 207, 255);
+	color: rgb(34, 207, 255);
+	cursor: pointer;
+}
