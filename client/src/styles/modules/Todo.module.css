@@ -2,3 +2,10 @@
 	max-width: 800px;
 	margin: auto;
 }
+
+.todosNotFound {
+	text-align: center;
+	margin-top: 25px;
+	font-size: 28px;
+	font-weight: 500;
+}
