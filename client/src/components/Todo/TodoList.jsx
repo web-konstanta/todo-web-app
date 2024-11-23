@@ -1,12 +1,15 @@
 import React from 'react';
-import '../../styles/static/tables.css'
-import Button from '../UI/Button/Button';
-import classes from '../../styles/modules/Todo.module.css'
+import '../../styles/static/tables.css';
+import classes from '../../styles/modules/Todo.module.css';
+import TodoItem from './TodoItem';
 
 const TodoList = ({ todos }) => {
+	if (!todos.length) {
+		return <div className={classes.todosNotFound}>Todos not found...</div>
+	}
+
 	return (
 		<div className={classes.wrapper}>
-			<Button btnClassName="addTask">Add Task</Button>
 			<table>
 				<thead>
 					<tr>
@@ -19,19 +22,7 @@ const TodoList = ({ todos }) => {
 				</thead>
 				<tbody>
 					{todos.map(todo =>
-						<tr
-							key={todo.id}
-						>
-							<th scope="row">{todo.id}</th>
-							<td>{todo.title}</td>
-							<td>{todo.status}</td>
-							<td>
-								<Button btnClassName="editTask">Edit</Button>
-							</td>
-							<td>
-								<Button btnClassName="removeTask">Remove</Button>
-							</td>
-						</tr>
+						<TodoItem key={todo.id} todo={todo} />
 					)}
 				</tbody>
 			</table>
