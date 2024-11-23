@@ -16,6 +16,7 @@ const TodoList = ({ todos }) => {
 						<th scope="col">#</th>
 						<th scope="col">Task name</th>
 						<th scope="col">Status</th>
+						<th scope="col">Date</th>
 						<th scope="col">Edit</th>
 						<th scope="col">Remove</th>
 					</tr>
