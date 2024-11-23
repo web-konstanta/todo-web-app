@@ -25,8 +25,12 @@ const TodoList = ({ todos }) => {
 							<th scope="row">{todo.id}</th>
 							<td>{todo.title}</td>
 							<td>{todo.status}</td>
-							<td>Edit</td>
-							<td>Remove</td>
+							<td>
+								<Button btnClassName="editTask">Edit</Button>
+							</td>
+							<td>
+								<Button btnClassName="removeTask">Remove</Button>
+							</td>
 						</tr>
 					)}
 				</tbody>
