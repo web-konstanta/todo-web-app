@@ -6,13 +6,17 @@
 	list-style: none;
 	padding: 0;
 	margin: 0;
-	display: flex;
-	display: flex;
-	justify-content: space-around;
-	background-color: #eae9e9;
+	background-color: #f9f6f6;
 }
 
-.menu ul div {
+.menuGroup {
+	display: flex;
+	justify-content: space-between;
+	max-width: 800px;
+	margin: auto;
+}
+
+.menuItem {
 	display: flex;
 	justify-content: space-between;
 }
