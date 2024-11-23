@@ -1,15 +1,12 @@
-.input {
+.select {
 	padding: 5px;
+	margin-right: 15px;
 	border-radius: 5px;
-	width: 250px;
+	width: 100px;
 	border: 2px solid rgb(34, 207, 255);
 	color: rgb(34, 207, 255);
 }
 
-.input::placeholder {
-	color: rgb(34, 207, 255);
-}
-
-.input:focus {
+.select:focus {
 	outline: none;
 }

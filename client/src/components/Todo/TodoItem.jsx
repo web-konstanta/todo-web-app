@@ -7,6 +7,7 @@ const TodoItem = ({ todo }) => {
 			<th scope="row">{todo.id}</th>
 			<td>{todo.title}</td>
 			<td>{todo.status}</td>
+			<td>{todo.createdAt}</td>
 			<td>
 				<Button btnClassName="editTask">Edit</Button>
 			</td>

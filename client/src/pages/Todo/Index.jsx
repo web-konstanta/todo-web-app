@@ -1,32 +1,23 @@
 import React, { useState } from 'react';
 import TodoList from '../../components/Todo/TodoList';
 import Navbar from '../../components/UI/Navbar/Navbar';
-import Input from '../../components/UI/Input/Input';
-import Button from '../../components/UI/Button/Button';
 import { useFilteredTodos } from '../../hooks/useTodo';
-import classes from '../../styles/modules/Todo.module.css';
+import TodoOptions from '../../components/Todo/TodoOptions';
 
 const Index = () => {
 	const [todos] = useState([
-		{ id: 1, title: 'First mock task', status: 'Complete' },
-		{ id: 2, title: 'Second mock task', status: 'In progress' },
-		{ id: 3, title: 'Third mock task', status: 'Todo' },
+		{ id: 1, title: 'First mock todo', status: 'Complete', createdAt: '23.11.2024' },
+		{ id: 2, title: 'Second mock todo', status: 'In progress', createdAt: '20.11.2024' },
+		{ id: 3, title: 'Third mock todo', status: 'Todo', createdAt: '19.11.2024' },
 	])
-	const [filter, setFilter] = useState({ query: '' })
+	const [filter, setFilter] = useState({ sort: '', query: '' })
 
-	const filteredPosts = useFilteredTodos(todos, filter.query)
+	const filteredPosts = useFilteredTodos(todos, filter.sort, filter.query)
 
 	return (
 		<div>
 			<Navbar />
-			<div className={classes.wrapper}>
-				<Input
-					type="text"
-					placeholder="Search todo..."
-					onChange={e => setFilter({ ...filter, query: e.target.value })}
-				/>
-				<Button btnClassName="addTask">Add Task</Button>
-			</div>
+			<TodoOptions filter={filter} setFilter={setFilter} />
 			<TodoList todos={filteredPosts} />
 		</div>
 	);
