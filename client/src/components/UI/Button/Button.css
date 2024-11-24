@@ -27,3 +27,39 @@
 	color: rgb(245, 115, 86);
 	cursor: pointer;
 }
+
+.taskComplete {
+	float: right;
+	padding: 7px;
+	background-color: rgb(52, 255, 34);
+	border-radius: 5px;
+	border: none;
+	color: white;
+	font-size: 15px;
+	cursor: pointer;
+	width: 100px;
+}
+
+.taskInProgress {
+	float: right;
+	padding: 7px;
+	background-color: rgb(245, 115, 86);
+	border-radius: 5px;
+	border: none;
+	color: white;
+	font-size: 15px;
+	cursor: pointer;
+	width: 100px;
+}
+
+.taskTodo {
+	float: right;
+	padding: 7px;
+	background-color: rgb(34, 207, 255);
+	border-radius: 5px;
+	border: none;
+	color: white;
+	font-size: 15px;
+	cursor: pointer;
+	width: 100px;
+}
