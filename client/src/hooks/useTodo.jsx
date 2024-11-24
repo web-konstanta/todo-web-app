@@ -11,7 +11,6 @@ export const useSortedTodos = (todos, sort) => {
 
 export const useFilteredTodos = (todos, sort, query) => {
 	const sortedPosts = useSortedTodos(todos, sort)
-	console.log(sortedPosts);
 
 	return useMemo(() => {
 		return sortedPosts.filter(todo => todo.title.toLowerCase().includes(query.toLowerCase()))
