@@ -6,7 +6,7 @@ export const useSortedTodos = (todos, sort) => {
 			return todos.sort((a, b) => a[sort].localeCompare(b[sort]))
 		}
 		return todos
-	}, [sort])
+	}, [todos, sort])
 }
 
 export const useFilteredTodos = (todos, sort, query) => {
@@ -14,5 +14,5 @@ export const useFilteredTodos = (todos, sort, query) => {
 
 	return useMemo(() => {
 		return sortedPosts.filter(todo => todo.title.toLowerCase().includes(query.toLowerCase()))
-	}, [query, sort])
+	}, [todos, query, sort])
 }

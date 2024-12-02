@@ -3,7 +3,7 @@ import '../../styles/static/tables.css';
 import classes from '../../styles/modules/Todo.module.css';
 import TodoItem from './TodoItem';
 
-const TodoList = ({ todos }) => {
+const TodoList = ({ todos, remove }) => {
 	if (!todos.length) {
 		return <div className={classes.todosNotFound}>Todos not found...</div>
 	}
@@ -23,7 +23,11 @@ const TodoList = ({ todos }) => {
 				</thead>
 				<tbody>
 					{todos.map(todo =>
-						<TodoItem key={todo.id} todo={todo} />
+						<TodoItem
+							key={todo.id}
+							todo={todo}
+							remove={remove}
+						/>
 					)}
 				</tbody>
 			</table>

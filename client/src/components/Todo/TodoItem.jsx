@@ -2,7 +2,7 @@ import React from 'react';
 import Button from '../UI/Button/Button';
 import { Link } from 'react-router-dom';
 
-const TodoItem = ({ todo }) => {
+const TodoItem = ({ todo, remove }) => {
 	const statusClasses = {
 		complete: 'taskComplete',
 		'in progress': 'taskInProgress',
@@ -25,7 +25,12 @@ const TodoItem = ({ todo }) => {
 				</Link>
 			</td>
 			<td>
-				<Button btnClassName="removeTask">Remove</Button>
+				<Button
+					btnClassName="removeTask"
+					onClick={() => remove(todo.id)}
+				>
+					Remove
+				</Button>
 			</td>
 		</tr>
 	);
