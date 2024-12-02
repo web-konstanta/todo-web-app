@@ -1,5 +1,6 @@
 import React from 'react';
 import Button from '../UI/Button/Button';
+import { Link } from 'react-router-dom';
 
 const TodoItem = ({ todo }) => {
 	const statusClasses = {
@@ -17,7 +18,11 @@ const TodoItem = ({ todo }) => {
 			</td>
 			<td>{todo.createdAt}</td>
 			<td>
-				<Button btnClassName="editTask">Edit</Button>
+				<Link to={`/todo/update/${todo.id}`}>
+					<Button btnClassName="editTask">
+						Edit
+					</Button>
+				</Link>
 			</td>
 			<td>
 				<Button btnClassName="removeTask">Remove</Button>
