@@ -1,10 +1,11 @@
 import React from 'react';
 import Select from '../UI/Select/Select';
 import Input from '../UI/Input/Input';
+import classes from '../../styles/modules/Todo.module.css'
 
 const TodoFilter = ({ filter, setFilter }) => {
 	return (
-		<div>
+		<div className={classes.todoFilter}>
 			<Select
 				defaultOption="Sort todos"
 				options={[
