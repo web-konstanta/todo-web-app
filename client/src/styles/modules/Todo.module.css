@@ -1,12 +1,28 @@
 .wrapper {
 	max-width: 900px;
 	margin: auto;
+	padding: 0 25px;
 }
 
 .todosOptions {
 	display: flex;
+	flex-wrap: wrap;
 	justify-content: space-between;
 	align-items: center;
+}
+
+.todoFilter {
+	display: flex;
+	flex-wrap: wrap;
+}
+
+.todoForm {
+	max-width: 400px;
+	margin: 150px auto;
+}
+
+.todoFormItem {
+	margin: 10px 0;
 }
 
 .todosNotFound {
