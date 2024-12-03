@@ -1,11 +1,12 @@
 import React from 'react';
-import { Routes, Route } from 'react-router-dom';
+import { Routes, Route, Navigate } from 'react-router-dom';
 import { routes } from './routes';
 import NotFound from './pages/NotFound';
 
 const AppRouter = () => {
 	return (
 		<Routes>
+			<Route path="/" element={<Navigate to="/todo" replace />} />
 			{routes.map((route, key) =>
 				<Route
 					key={key}

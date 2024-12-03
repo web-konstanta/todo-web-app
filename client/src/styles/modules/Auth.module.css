@@ -1,0 +1,24 @@
+.wrapper {
+	max-width: 900px;
+	margin: auto;
+	padding: 0 25px;
+}
+
+.authForm {
+	max-width: 400px;
+	margin: 150px auto;
+}
+
+.authFormItem {
+	margin: 10px 0;
+}
+
+.authRedirect {
+	text-align: center;
+	margin-top: 15px;
+}
+
+.authRedirect>a {
+	text-decoration: none;
+	color: blue;
+}
