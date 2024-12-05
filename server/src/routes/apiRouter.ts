@@ -15,6 +15,14 @@ router.post(
       .withMessage('Password is too short or long'),
 	AuthController.signUp
 )
+router.post(
+	'/sign-in',
+	body('email').isEmail().withMessage('Email field is invalid'),
+	body('password')
+      .isLength({ min: 6, max: 30 })
+		.withMessage('Password is too short or long'),
+	AuthController.signIn
+)
 
 router.get('/todo', authMiddleware, TodoController.getAll)
 
