@@ -1,6 +1,8 @@
 import Router from 'express'
 import AuthController from '../controllers/AuthController'
+import TodoController from '../controllers/TodoController'
 import { body } from 'express-validator'
+import authMiddleware from '../middlewares/authMiddleware'
 
 const router = Router()
 
@@ -13,5 +15,7 @@ router.post(
       .withMessage('Password is too short or long'),
 	AuthController.signUp
 )
+
+router.get('/todo', authMiddleware, TodoController.getAll)
 
 export default router

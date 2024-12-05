@@ -17,10 +17,10 @@ export default class HttpError extends Error {
 	}
 
 	public static unauthorized() {
-		return new HttpError(400, 'Unauthorized')
+		return new HttpError(401, 'Unauthorized')
 	}
 
-	public static badRequest(status: number, message: string, body: []) {
+	public static badRequest(status: number, message: string, body?: []) {
 		return new HttpError(status, message, body)
 	}
 }
