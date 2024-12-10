@@ -19,7 +19,7 @@ class AuthController {
 		}
 	}
 
-	async signIn(req: Request, res: Response, next: NextFunction) {
+	async signIn(req: Request, res: Response, next: NextFunction): Promise<any> {
 		try {
 			const errors = validationResult(req)
 			if (!errors.isEmpty()) {

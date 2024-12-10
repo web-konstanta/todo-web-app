@@ -25,5 +25,13 @@ router.post(
 )
 
 router.get('/todo', authMiddleware, TodoController.getAll)
+router.post(
+	'/todo/create',
+	authMiddleware,
+	body('title').isLength({ min: 3, max: 25 }).withMessage('Enter title correctly'),
+	body('description').isLength({ min: 3, max: 100 }).withMessage('Enter description correctly'),
+	body('statusId').isInt().withMessage('Enter status id correctly'),
+	TodoController.create
+)
 
 export default router
