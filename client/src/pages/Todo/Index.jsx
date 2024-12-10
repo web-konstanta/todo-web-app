@@ -1,8 +1,9 @@
-import React, { useState } from 'react';
+import React, { useContext, useState } from 'react';
 import TodoList from '../../components/Todo/TodoList';
 import Navbar from '../../components/UI/Navbar/Navbar';
 import { useFilteredTodos } from '../../hooks/useTodo';
 import TodoOptions from '../../components/Todo/TodoOptions';
+import { AuthContext } from '../../context/authContext';
 
 const Index = () => {
 	const [todos, setTodos] = useState([
@@ -11,6 +12,9 @@ const Index = () => {
 		{ id: 3, title: 'Third mock todo', status: 'Todo', createdAt: '19.11.2024' },
 	])
 	const [filter, setFilter] = useState({ sort: '', query: '' })
+	const { isAuth, setIsAuth } = useContext(AuthContext)
+
+	console.log(isAuth);
 
 	const removeTodo = id => setTodos([...todos].filter(todo => todo.id !== id))
 
