@@ -6,7 +6,14 @@ import prisma from '../lib/prisma'
 class TodoController {
 	async getAll(req: Request, res: Response, next: NextFunction): Promise<any> {
 		try {
+			const { pgnum, pglimit } = req.query
+
+			const pageNumber = parseInt(pgnum as string, 10) || 0
+			const pageLimit = parseInt(pglimit as string, 10) || 10
+
 			const todoList = await prisma.todo.findMany({
+				skip: pageNumber * pageLimit,
+				take: pageLimit,
 				select: {
 					id: true,
 					title: true,
