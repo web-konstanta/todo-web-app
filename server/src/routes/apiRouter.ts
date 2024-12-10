@@ -33,5 +33,13 @@ router.post(
 	body('statusId').isInt().withMessage('Enter status id correctly'),
 	TodoController.create
 )
+router.put(
+	'/todo/update/:id',
+	authMiddleware,
+	body('title').isLength({ min: 3, max: 25 }).withMessage('Enter title correctly'),
+	body('description').isLength({ min: 3, max: 100 }).withMessage('Enter description correctly'),
+	body('statusId').isInt().withMessage('Enter status id correctly'),
+	TodoController.update
+)
 
 export default router

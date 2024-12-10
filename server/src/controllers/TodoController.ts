@@ -61,12 +61,65 @@ class TodoController {
 					description: true,
 					statusId: true,
 					createdAt: true
-				},
+				}
 			})
 
 			res.json({
 				data: todo,
 				message: 'New todo created'
+			})
+		} catch (e) {
+			next(e)
+		}
+	}
+
+	async update(req: Request, res: Response, next: NextFunction): Promise<any> {
+		try {
+			const errors = validationResult(req)
+			if (!errors.isEmpty()) {
+				throw HttpError.validationError(errors.array())
+			}
+
+			const { id: todoId } = req.params
+			const data = req.body
+
+			const todoStatus = await prisma.todoStatus.findFirst({
+				where: {
+					id: data.statusId
+				}
+			})
+
+			if (!todoStatus) {
+				throw HttpError.badRequest(400, 'Status id is invalid')
+			}
+
+			const todo = await prisma.todo.findFirst({
+				where: {
+					id: parseInt(todoId)
+				}
+			})
+
+			if (!todo) {
+				throw HttpError.badRequest(400, 'Todo id is invalid')
+			}
+
+			const updatedTodo = await prisma.todo.update({
+				where: {
+					id: parseInt(todoId)
+				},
+				data: data,
+				select: {
+					id: true,
+					title: true,
+					description: true,
+					statusId: true,
+					createdAt: true
+				}
+			})
+
+			res.json({
+				data: updatedTodo,
+				message: `Todo with id ${todoId} updated successfully`
 			})
 		} catch (e) {
 			next(e)
