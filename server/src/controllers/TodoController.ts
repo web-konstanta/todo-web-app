@@ -6,7 +6,20 @@ import prisma from '../lib/prisma'
 class TodoController {
 	async getAll(req: Request, res: Response, next: NextFunction): Promise<any> {
 		try {
-			res.json({ message: 'Todo list fetched' })
+			const todoList = await prisma.todo.findMany({
+				select: {
+					id: true,
+					title: true,
+					description: true,
+					statusId: true,
+					createdAt: true
+				}
+			})
+
+			res.json({
+				data: todoList,
+				message: 'Todo list fetched'
+			})
 		} catch (e) {
 			next(e)
 		}
@@ -40,11 +53,14 @@ class TodoController {
 					title: true,
 					description: true,
 					statusId: true,
-					createdAt: true,
+					createdAt: true
 				},
 			})
 
-			res.json(todo)
+			res.json({
+				data: todo,
+				message: 'New todo created'
+			})
 		} catch (e) {
 			next(e)
 		}
