@@ -41,5 +41,6 @@ router.put(
 	body('statusId').isInt().withMessage('Enter status id correctly'),
 	TodoController.update
 )
+router.delete('/todo/delete/:id', authMiddleware, TodoController.delete)
 
 export default router

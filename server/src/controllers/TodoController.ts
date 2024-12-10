@@ -64,7 +64,7 @@ class TodoController {
 				}
 			})
 
-			res.json({
+			res.status(201).json({
 				data: todo,
 				message: 'New todo created'
 			})
@@ -120,6 +120,25 @@ class TodoController {
 			res.json({
 				data: updatedTodo,
 				message: `Todo with id ${todoId} updated successfully`
+			})
+		} catch (e) {
+			next(e)
+		}
+	}
+
+	async delete(req: Request, res: Response, next: NextFunction): Promise<any> {
+		try {
+			const { id: todoId } = req.params
+
+			await prisma.todo.delete({
+				where: {
+					id: parseInt(todoId)
+				}
+			})
+
+			res.json({
+				data: [],
+				message: `Todo with id ${todoId} deleted successfully`
 			})
 		} catch (e) {
 			next(e)
