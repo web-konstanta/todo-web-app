@@ -14,6 +14,9 @@ class TodoController {
 			const todoList = await prisma.todo.findMany({
 				skip: pageNumber * pageLimit,
 				take: pageLimit,
+				where: {
+					userId: req.user?.id
+				},
 				select: {
 					id: true,
 					title: true,
