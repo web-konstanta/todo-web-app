@@ -12,9 +12,6 @@ const Index = () => {
 		{ id: 3, title: 'Third mock todo', status: 'Todo', createdAt: '19.11.2024' },
 	])
 	const [filter, setFilter] = useState({ sort: '', query: '' })
-	const { isAuth, setIsAuth } = useContext(AuthContext)
-
-	console.log(isAuth);
 
 	const removeTodo = id => setTodos([...todos].filter(todo => todo.id !== id))
 
