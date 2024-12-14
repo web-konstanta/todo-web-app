@@ -4,19 +4,17 @@ import Navbar from '../../components/UI/Navbar/Navbar';
 import { useFilteredTodos } from '../../hooks/useTodo';
 import TodoOptions from '../../components/Todo/TodoOptions';
 import axiosInstance from '../../axiosConfig'
+import Loader from '../../components/UI/Loader/Loader';
+import { useFetch } from '../../hooks/useFetching';
 
 const Index = () => {
 	const [todos, setTodos] = useState([])
 	const [filter, setFilter] = useState({ sort: '', query: '' })
 
-	const fetchPosts = async () => {
-		try {
-			const response = await axiosInstance.get('/todo')
-			setTodos([...response.data?.data])
-		} catch (e) {
-			console.log(e)
-		}
-	}
+	const [fetchPosts, isLoading, error] = useFetch(async () => {
+		const response = await axiosInstance.get('/todo')
+		setTodos([...response.data?.data])
+	})
 
 	useEffect(() => {
 		try {
@@ -30,11 +28,15 @@ const Index = () => {
 
 	const filteredPosts = useFilteredTodos(todos, filter.sort, filter.query)
 
+
 	return (
 		<div>
 			<Navbar />
 			<TodoOptions filter={filter} setFilter={setFilter} />
-			<TodoList todos={filteredPosts} remove={removeTodo} />
+			{error
+				? <h1 style={{ textAlign: 'center', color: 'red', marginTop: '6%' }}>{error}</h1>
+				: isLoading ? <Loader /> : <TodoList todos={filteredPosts} remove={removeTodo} />
+			}
 		</div>
 	);
 };

@@ -1,46 +1,70 @@
-import React, { useContext, useState } from 'react';
+import React from 'react';
 import Input from '../UI/Input/Input';
 import Button from '../UI/Button/Button';
 import classes from '../../styles/modules/Auth.module.css';
 import { Link } from 'react-router-dom';
+import { useForm } from 'react-hook-form';
+import { yupResolver } from '@hookform/resolvers/yup';
+import * as yup from 'yup';
 import authService from '../../services/authService';
-import { AuthContext } from '../../context/authContext'
+import { useContext } from 'react';
+import { AuthContext } from '../../context/authContext';
+
+const schema = yup.object({
+	name: yup.string().required('Name field is required'),
+	email: yup.string().email('Invalid email format').required('Email field is required'),
+	password: yup.string().min(4, 'Password must be at least 4 characters long').required('Password is required'),
+})
 
 const SignUpForm = () => {
+	const inputStyles = { width: '100%', padding: '10px' }
 	const { setIsAuth } = useContext(AuthContext)
-	const [user, setUser] = useState({ name: '', email: '', password: '' })
 
-	const signUp = async e => {
-		e.preventDefault()
-		if (await authService.signUp(user)) setIsAuth(true)
+	const {
+		register,
+		handleSubmit,
+		formState: { errors }
+	} = useForm({
+		resolver: yupResolver(schema),
+	})
+
+	const onSubmit = async data => {
+		const response = await authService.signUp(data);
+		if (response) setIsAuth(true);
 	}
 
 	return (
-		<form className={classes.authForm} onSubmit={signUp}>
+		<form className={classes.authForm} onSubmit={handleSubmit(onSubmit)}>
 			<div className={classes.authFormItem}>
 				<Input
 					type="text"
 					placeholder="Enter your name"
-					styles={{ width: '100%', padding: '10px' }}
-					onChange={e => setUser({ ...user, name: e.target.value })}
+					styles={inputStyles}
+					{...register('name')}
 				/>
+				{errors.name && <p style={{ color: 'red' }}>{errors.name.message}</p>}
 			</div>
+
 			<div className={classes.authFormItem}>
 				<Input
 					type="email"
 					placeholder="Enter your email address"
-					styles={{ width: '100%', padding: '10px' }}
-					onChange={e => setUser({ ...user, email: e.target.value })}
+					styles={inputStyles}
+					{...register('email')}
 				/>
+				{errors.email && <p style={{ color: 'red' }}>{errors.email.message}</p>}
 			</div>
+
 			<div className={classes.authFormItem}>
 				<Input
 					type="password"
 					placeholder="Enter your password"
-					styles={{ width: '100%', padding: '10px' }}
-					onChange={e => setUser({ ...user, password: e.target.value })}
+					styles={inputStyles}
+					{...register('password')}
 				/>
+				{errors.password && <p style={{ color: 'red' }}>{errors.password.message}</p>}
 			</div>
+
 			<Button
 				type="submit"
 				btnClassName="createTask"
@@ -48,7 +72,9 @@ const SignUpForm = () => {
 			>
 				Sign up
 			</Button>
-			<div className={classes.authRedirect}>You have an account? <Link to="/sign-in">Sign in here!</Link></div>
+			<div className={classes.authRedirect}>
+				You have an account? <Link to="/sign-in">Sign in here!</Link>
+			</div>
 		</form>
 	);
 };
