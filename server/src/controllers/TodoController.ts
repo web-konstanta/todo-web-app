@@ -35,6 +35,25 @@ class TodoController {
 		}
 	}
 
+	async getStatuses(req: Request, res: Response, next: NextFunction) {
+		try {
+			let todoStatuses = await prisma.todoStatus.findMany({
+				select: {
+					id: true,
+					name: true,
+					createdAt: true
+				}
+			})
+
+			res.json({
+				data: todoStatuses,
+				message: 'Todo statuses fetched'
+			})
+		} catch (e) {
+			next(e)
+		}
+	}
+
 	async create(req: Request, res: Response, next: NextFunction): Promise<any> {
 		try {
 			const errors = validationResult(req)
