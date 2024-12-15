@@ -24,6 +24,15 @@ class TodoService {
 			console.log(e)
 		}
 	}
+
+	async delete(id) {
+		try {
+			const response = await axiosInstance.delete(`/todo/delete/${id}`)
+			console.log(response.data?.data)
+		} catch (e) {
+			console.log(e)
+		}
+	}
 }
 
 export default new TodoService()
