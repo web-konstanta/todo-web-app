@@ -10,6 +10,7 @@ import todoService from '../../services/todoService';
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from 'yup';
+import Loader from '../UI/Loader/Loader';
 
 const schema = yup.object({
 	title: yup.string().required('Title field is required'),
@@ -27,7 +28,6 @@ const TodoUpdateForm = () => {
 		register,
 		handleSubmit,
 		formState: { errors },
-		setValue,
 		reset
 	} = useForm({
 		resolver: yupResolver(schema),
@@ -43,9 +43,14 @@ const TodoUpdateForm = () => {
 		setTodoStatuses([...data])
 	})
 
-	const [fetchTodo, isLoading, error] = useFetch(async () => {
+	const [fetchTodo, isTodoLoading, todoError] = useFetch(async () => {
 		const response = await axiosInstance.get(`/todo/${id}`)
 		setTodo(response.data?.data)
+	})
+
+	const [updateTodo, isUpdateLoading, updateError] = useFetch(async data => {
+		const status = await todoService.update(id, data)
+		if (status === 200) navigate('/todo')
 	})
 
 	useEffect(() => {
@@ -62,11 +67,6 @@ const TodoUpdateForm = () => {
 		fetchTodo()
 		fetchTodoStatuses()
 	}, [])
-
-	const updateTodo = async data => {
-		const status = await todoService.update(id, data)
-		if (status === 200) navigate('/todo')
-	}
 
 	return (
 		<div className={classes.wrapper}>
@@ -104,6 +104,8 @@ const TodoUpdateForm = () => {
 				>
 					Update task
 				</Button>
+				{isStatusesLoading || isUpdateLoading || isTodoLoading && <Loader />}
+				{statusesError || updateError || todoError && <h3 style={{ textAlign: 'center', color: 'red' }}>{statusesError || updateError || todoError}</h3>}
 			</form>
 		</div>
 	);

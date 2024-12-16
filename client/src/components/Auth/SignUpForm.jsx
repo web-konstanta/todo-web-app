@@ -9,6 +9,8 @@ import * as yup from 'yup';
 import authService from '../../services/authService';
 import { useContext } from 'react';
 import { AuthContext } from '../../context/authContext';
+import { useFetch } from '../../hooks/useFetching';
+import Loader from '../UI/Loader/Loader';
 
 const schema = yup.object({
 	name: yup.string().required('Name field is required'),
@@ -25,16 +27,13 @@ const SignUpForm = () => {
 		handleSubmit,
 		formState: { errors }
 	} = useForm({
-		resolver: yupResolver(schema),
+		resolver: yupResolver(schema)
 	})
 
-	const onSubmit = async data => {
-		const response = await authService.signUp(data);
-		if (response) setIsAuth(true);
-	}
+	const [signUp, isLoading, error] = useFetch(async data => await authService.signUp(data, setIsAuth))
 
 	return (
-		<form className={classes.authForm} onSubmit={handleSubmit(onSubmit)}>
+		<form className={classes.authForm} onSubmit={handleSubmit(signUp)}>
 			<div className={classes.authFormItem}>
 				<Input
 					type="text"
@@ -72,6 +71,8 @@ const SignUpForm = () => {
 			>
 				Sign up
 			</Button>
+			{isLoading && <Loader />}
+			{error && <h3 style={{ textAlign: 'center', color: 'red' }}>{error}</h3>}
 			<div className={classes.authRedirect}>
 				You have an account? <Link to="/sign-in">Sign in here!</Link>
 			</div>

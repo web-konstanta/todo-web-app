@@ -15,21 +15,13 @@ class TodoService {
 	}
 
 	async create(data) {
-		try {
-			const response = await axiosInstance.post('/todo/create', data)
-			return response?.status
-		} catch (e) {
-			console.log(e)
-		}
+		const response = await axiosInstance.post('/todo/create', data)
+		return response?.status
 	}
 
 	async update(id, data) {
-		try {
-			const response = await axiosInstance.put(`/todo/update/${id}`, data)
-			return response?.status
-		} catch (e) {
-			console.log(e)
-		}
+		const response = await axiosInstance.put(`/todo/updatee/${id}`, data)
+		return response?.status
 	}
 
 	async delete(id) {

@@ -3,8 +3,8 @@ import Button from '../UI/Button/Button';
 import { Link } from 'react-router-dom';
 import todoService from '../../services/todoService';
 import { useFetch } from '../../hooks/useFetching';
-import { formatDate } from '../common/utils';
-import { statusClasses } from '../common/constants';
+import { formatDate } from '../../common/utils';
+import { statusClasses } from '../../common/constants';
 
 const TodoItem = ({ todo, remove }) => {
 	const [statusNames, setStatusNames] = useState([])

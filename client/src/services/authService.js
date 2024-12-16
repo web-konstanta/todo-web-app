@@ -1,32 +1,24 @@
 import axios from 'axios';
 
 class AuthService {
-	async signUp(data) {
-		try {
-			const apiUrl = process.env.REACT_APP_API_URL
-			const response = await axios.post(`${apiUrl}/sign-up`, data)
+	async signUp(data, setIsAuth) {
+		const apiUrl = process.env.REACT_APP_API_URL
+		const response = await axios.post(`${apiUrl}/sign-up`, data)
 
-			const accessToken = response?.data?.token
-			localStorage.setItem('accessToken', accessToken)
+		const accessToken = response?.data?.token
+		localStorage.setItem('accessToken', accessToken)
 
-			return response?.data
-		} catch (e) {
-			console.log(e)
-		}
+		if (response?.data) setIsAuth(true)
 	}
 
-	async signIn(data) {
-		try {
-			const apiUrl = process.env.REACT_APP_API_URL
-			const response = await axios.post(`${apiUrl}/sign-in`, data)
+	async signIn(data, setIsAuth) {
+		const apiUrl = process.env.REACT_APP_API_URL
+		const response = await axios.post(`${apiUrl}/sign-in`, data)
 
-			const accessToken = response?.data?.token
-			localStorage.setItem('accessToken', accessToken)
+		const accessToken = response?.data?.token
+		localStorage.setItem('accessToken', accessToken)
 
-			return response?.data
-		} catch (e) {
-			console.log(e)
-		}
+		if (response?.data) setIsAuth(true)
 	}
 }
 
