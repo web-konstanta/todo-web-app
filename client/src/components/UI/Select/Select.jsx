@@ -1,14 +1,13 @@
 import React from 'react';
 import classes from './Select.module.css'
 
-const Select = React.forwardRef(({ defaultOption, options, statusId, ...props }, ref) => {
+const Select = React.forwardRef(({ options, statusId, ...props }, ref) => {
 	if (statusId) {
 		<select
 			{...props}
 			className={classes.select}
 			ref={ref}
 		>
-			<option value="">{defaultOption}</option>
 			{options.map((option, key) => (
 				<option
 					key={key}
@@ -27,7 +26,6 @@ const Select = React.forwardRef(({ defaultOption, options, statusId, ...props },
 			className={classes.select}
 			ref={ref}
 		>
-			<option value="">{defaultOption}</option>
 			{options.map((option, key) => (
 				<option key={key} value={option.value}>
 					{option.name}

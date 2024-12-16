@@ -89,7 +89,6 @@ const TodoUpdateForm = () => {
 				</div>
 				<div className={classes.todoFormItem}>
 					<Select
-						defaultOption="Select todo status"
 						options={todoStatuses}
 						statusId={todo.statusId}
 						style={{ width: '400px', padding: '10px' }}
