@@ -17,9 +17,7 @@ class TodoService {
 	async create(data) {
 		try {
 			const response = await axiosInstance.post('/todo/create', data)
-			if (response?.status === 201) {
-				window.location.href = '/todo'
-			}
+			return response?.status
 		} catch (e) {
 			console.log(e)
 		}
@@ -28,9 +26,7 @@ class TodoService {
 	async update(id, data) {
 		try {
 			const response = await axiosInstance.put(`/todo/update/${id}`, data)
-			if (response?.status === 200) {
-				window.location.href = '/todo'
-			}
+			return response?.status
 		} catch (e) {
 			console.log(e)
 		}
@@ -38,8 +34,7 @@ class TodoService {
 
 	async delete(id) {
 		try {
-			const response = await axiosInstance.delete(`/todo/delete/${id}`)
-			console.log(response.data?.data)
+			await axiosInstance.delete(`/todo/delete/${id}`)
 		} catch (e) {
 			console.log(e)
 		}

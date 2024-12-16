@@ -8,6 +8,7 @@ import * as yup from 'yup';
 import todoService from '../../services/todoService';
 import Select from '../UI/Select/Select';
 import { useFetch } from '../../hooks/useFetching';
+import { useNavigate } from 'react-router-dom';
 
 const schema = yup.object({
 	title: yup.string().required('Title field is required'),
@@ -17,6 +18,7 @@ const schema = yup.object({
 
 const TodoCreateForm = () => {
 	const [todoStatuses, setTodoStatuses] = useState([])
+	const navigate = useNavigate()
 
 	const {
 		register,
@@ -35,7 +37,10 @@ const TodoCreateForm = () => {
 		fetchTodoStatuses()
 	}, [])
 
-	const createTodo = async data => await todoService.create(data)
+	const createTodo = async data => {
+		const status = await todoService.create(data)
+		if (status === 201) navigate('/todo')
+	}
 
 	return (
 		<div className={classes.wrapper}>

@@ -2,7 +2,7 @@ import React, { useEffect, useRef, useState } from 'react';
 import classes from '../../styles/modules/Todo.module.css';
 import Input from '../UI/Input/Input';
 import Button from '../UI/Button/Button';
-import { useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import { useFetch } from '../../hooks/useFetching';
 import axiosInstance from '../../axiosConfig';
 import Select from '../UI/Select/Select';
@@ -21,6 +21,7 @@ const TodoUpdateForm = () => {
 	const { id } = useParams()
 	const [todo, setTodo] = useState({})
 	const [todoStatuses, setTodoStatuses] = useState([])
+	const navigate = useNavigate()
 
 	const {
 		register,
@@ -62,7 +63,10 @@ const TodoUpdateForm = () => {
 		fetchTodoStatuses()
 	}, [])
 
-	const updateTodo = async data => await todoService.update(id, data)
+	const updateTodo = async data => {
+		const status = await todoService.update(id, data)
+		if (status === 200) navigate('/todo')
+	}
 
 	return (
 		<div className={classes.wrapper}>
