@@ -3,13 +3,10 @@ import Button from '../UI/Button/Button';
 import { Link } from 'react-router-dom';
 import todoService from '../../services/todoService';
 import { useFetch } from '../../hooks/useFetching';
+import { formatDate } from '../common/utils';
+import { statusClasses } from '../common/constants';
 
 const TodoItem = ({ todo, remove }) => {
-	const statusClasses = {
-		1: 'taskTodo',
-		2: 'taskInProgress',
-		3: 'taskComplete'
-	}
 	const [statusNames, setStatusNames] = useState([])
 
 	const [fetchStatusNames, isLoading, error] = useFetch(async () => {
@@ -20,17 +17,6 @@ const TodoItem = ({ todo, remove }) => {
 	useEffect(() => {
 		fetchStatusNames()
 	}, [])
-
-
-	const formatDate = isoDate => {
-		const date = new Date(isoDate)
-
-		const day = date.getUTCDate().toString().padStart(2, '0')
-		const month = (date.getUTCMonth() + 1).toString().padStart(2, '0')
-		const year = date.getUTCFullYear()
-
-		return `${day}-${month}-${year}`
-	}
 
 	return (
 		<tr>

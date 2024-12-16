@@ -26,6 +26,7 @@ router.post(
 
 router.get('/todo', authMiddleware, TodoController.getAll)
 router.get('/todo/statuses', authMiddleware, TodoController.getStatuses)
+router.get('/todo/:id', authMiddleware, TodoController.getOne)
 router.post(
 	'/todo/create',
 	authMiddleware,

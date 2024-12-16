@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import TodoList from '../../components/Todo/TodoList';
 import Navbar from '../../components/UI/Navbar/Navbar';
 import { useFilteredTodos } from '../../hooks/useTodo';
@@ -6,6 +6,7 @@ import TodoOptions from '../../components/Todo/TodoOptions';
 import axiosInstance from '../../axiosConfig'
 import Loader from '../../components/UI/Loader/Loader';
 import { useFetch } from '../../hooks/useFetching';
+import todoService from '../../services/todoService';
 
 const Index = () => {
 	const [todos, setTodos] = useState([])
@@ -17,17 +18,19 @@ const Index = () => {
 	})
 
 	useEffect(() => {
+		fetchPosts()
+	}, [])
+
+	const removeTodo = async id => {
 		try {
-			fetchPosts()
+			await todoService.delete(id)
+			setTodos([...todos].filter(todo => todo.id !== id))
 		} catch (e) {
 			console.log(e)
 		}
-	}, [])
-
-	const removeTodo = id => setTodos([...todos].filter(todo => todo.id !== id))
+	}
 
 	const filteredPosts = useFilteredTodos(todos, filter.sort, filter.query)
-
 
 	return (
 		<div>

@@ -35,9 +35,39 @@ class TodoController {
 		}
 	}
 
+	async getOne(req: Request, res: Response, next: NextFunction): Promise<any> {
+		try {
+			const { id: todoId } = req.params
+
+			const todo = await prisma.todo.findFirst({
+				where: {
+					id: parseInt(todoId)
+				},
+				select: {
+					id: true,
+					title: true,
+					description: true,
+					statusId: true,
+					createdAt: true
+				}
+			})
+
+			if (!todo) {
+				throw HttpError.badRequest(400, `Todo by id ${todoId} not found`)
+			}
+
+			res.json({
+				data: todo,
+				message: 'Todo item fetched successfully'
+			})
+		} catch (e) {
+			next(e)
+		}
+	}
+
 	async getStatuses(req: Request, res: Response, next: NextFunction) {
 		try {
-			let todoStatuses = await prisma.todoStatus.findMany({
+			const todoStatuses = await prisma.todoStatus.findMany({
 				select: {
 					id: true,
 					name: true,
