@@ -20,7 +20,7 @@ class TodoService {
 	}
 
 	async update(id, data) {
-		const response = await axiosInstance.put(`/todo/updatee/${id}`, data)
+		const response = await axiosInstance.put(`/todo/update/${id}`, data)
 		return response?.status
 	}
 
