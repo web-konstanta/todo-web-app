@@ -9,6 +9,8 @@ import { AuthContext } from '../../context/authContext';
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from 'yup';
+import { useFetch } from '../../hooks/useFetching';
+import Loader from '../UI/Loader/Loader'
 
 const schema = yup.object({
 	email: yup.string().email('Invalid email format').required('Email field is required'),
@@ -24,13 +26,10 @@ const SignInForm = () => {
 		handleSubmit,
 		formState: { errors }
 	} = useForm({
-		resolver: yupResolver(schema),
+		resolver: yupResolver(schema)
 	})
 
-	const signIn = async data => {
-		const response = await authService.signIn(data)
-		if (response) setIsAuth(true)
-	}
+	const [signIn, isLoading, error] = useFetch(async data => await authService.signIn(data, setIsAuth))
 
 	return (
 		<form className={classes.authForm} onSubmit={handleSubmit(signIn)}>
@@ -61,6 +60,8 @@ const SignInForm = () => {
 			>
 				Sign in
 			</Button>
+			{isLoading && <Loader />}
+			{error && <h3 style={{ textAlign: 'center', color: 'red' }}>{error}</h3>}
 			<div className={classes.authRedirect}>You don`t` have an account? <Link to="/sign-up">Sign up here!</Link></div>
 		</form>
 	);

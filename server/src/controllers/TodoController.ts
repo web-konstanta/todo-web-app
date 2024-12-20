@@ -6,30 +6,38 @@ import prisma from '../lib/prisma'
 class TodoController {
 	async getAll(req: Request, res: Response, next: NextFunction): Promise<any> {
 		try {
-			const { pgnum, pglimit } = req.query
+			const { pgnum, pglimit } = req.query;
 
-			const pageNumber = parseInt(pgnum as string, 10) || 0
-			const pageLimit = parseInt(pglimit as string, 10) || 10
+			const pageNumber = pgnum !== undefined ? parseInt(pgnum as string, 10) : null;
+			const pageLimit = pglimit !== undefined ? parseInt(pglimit as string, 10) : null;
 
-			const todoList = await prisma.todo.findMany({
-				skip: pageNumber * pageLimit,
-				take: pageLimit,
+			const queryOptions: any = {
 				where: {
-					userId: req.user?.id
+					userId: req.user?.id,
 				},
 				select: {
 					id: true,
 					title: true,
 					description: true,
 					statusId: true,
-					createdAt: true
-				}
-			})
+					createdAt: true,
+				},
+			};
+
+			if (pageNumber !== null && pageLimit !== null) {
+				queryOptions.skip = pageNumber * pageLimit;
+				queryOptions.take = pageLimit;
+			}
+
+			const todoList = await prisma.todo.findMany(queryOptions);
+			const todoCount = await prisma.todo.aggregate({ _count: { id: true } });
+
+			res.setHeader('x-total-count', todoCount._count.id)
 
 			res.json({
 				data: todoList,
-				message: 'Todo list fetched'
-			})
+				message: 'Todo list fetched',
+			});
 		} catch (e) {
 			next(e)
 		}

@@ -1,23 +1,10 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import Button from '../UI/Button/Button';
 import { Link } from 'react-router-dom';
-import todoService from '../../services/todoService';
-import { useFetch } from '../../hooks/useFetching';
-import { formatDate } from '../common/utils';
-import { statusClasses } from '../common/constants';
+import { formatDate } from '../../common/utils';
+import { statusClasses } from '../../common/constants';
 
-const TodoItem = ({ todo, remove }) => {
-	const [statusNames, setStatusNames] = useState([])
-
-	const [fetchStatusNames, isLoading, error] = useFetch(async () => {
-		let statuses = await todoService.todoStatuses()
-		setStatusNames([...statuses.map(status => status.name)])
-	})
-
-	useEffect(() => {
-		fetchStatusNames()
-	}, [])
-
+const TodoItem = ({ todo, remove, statusNames }) => {
 	return (
 		<tr>
 			<th scope="row">{todo.id}</th>

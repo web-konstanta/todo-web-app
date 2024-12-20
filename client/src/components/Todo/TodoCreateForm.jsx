@@ -9,6 +9,7 @@ import todoService from '../../services/todoService';
 import Select from '../UI/Select/Select';
 import { useFetch } from '../../hooks/useFetching';
 import { useNavigate } from 'react-router-dom';
+import Loader from '../UI/Loader/Loader';
 
 const schema = yup.object({
 	title: yup.string().required('Title field is required'),
@@ -28,19 +29,19 @@ const TodoCreateForm = () => {
 		resolver: yupResolver(schema),
 	})
 
-	const [fetchTodoStatuses, isLoading, error] = useFetch(async () => {
+	const [fetchTodoStatuses, isStatusesLoading, statusesError] = useFetch(async () => {
 		const data = await todoService.todoStatuses()
 		setTodoStatuses([...data])
+	})
+
+	const [createTodo, isCreateLoading, createError] = useFetch(async data => {
+		const status = await todoService.create(data)
+		if (status === 201) navigate('/todo')
 	})
 
 	useEffect(() => {
 		fetchTodoStatuses()
 	}, [])
-
-	const createTodo = async data => {
-		const status = await todoService.create(data)
-		if (status === 201) navigate('/todo')
-	}
 
 	return (
 		<div className={classes.wrapper}>
@@ -65,7 +66,6 @@ const TodoCreateForm = () => {
 				</div>
 				<div className={classes.todoFormItem}>
 					<Select
-						defaultOption="Select todo status"
 						options={todoStatuses}
 						style={{ width: '400px', padding: '10px' }}
 						{...register('statusId')}
@@ -79,6 +79,8 @@ const TodoCreateForm = () => {
 				>
 					Create task
 				</Button>
+				{isStatusesLoading || isCreateLoading && <Loader />}
+				{statusesError || createError && <h3 style={{ textAlign: 'center', color: 'red' }}>{statusesError || createError}</h3>}
 			</form>
 		</div>
 	);

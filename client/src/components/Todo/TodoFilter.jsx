@@ -7,7 +7,6 @@ const TodoFilter = ({ filter, setFilter }) => {
 	return (
 		<div className={classes.todoFilter}>
 			<Select
-				defaultOption="Sort todos"
 				options={[
 					{ name: 'By title', value: 'title' },
 					{ name: 'By date', value: 'createdAt' }
