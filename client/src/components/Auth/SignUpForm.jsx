@@ -7,10 +7,10 @@ import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from 'yup';
 import authService from '../../services/authService';
-import { useContext } from 'react';
-import { AuthContext } from '../../context/authContext';
 import { useFetch } from '../../hooks/useFetching';
 import Loader from '../UI/Loader/Loader';
+import { useDispatch } from 'react-redux';
+import { actionSetIsAuth } from '../../store/reducers/authReducer';
 
 const schema = yup.object({
 	name: yup.string().required('Name field is required'),
@@ -19,8 +19,8 @@ const schema = yup.object({
 })
 
 const SignUpForm = () => {
+	const dispatch = useDispatch()
 	const inputStyles = { width: '100%', padding: '10px' }
-	const { setIsAuth } = useContext(AuthContext)
 
 	const {
 		register,
@@ -30,7 +30,11 @@ const SignUpForm = () => {
 		resolver: yupResolver(schema)
 	})
 
-	const [signUp, isLoading, error] = useFetch(async data => await authService.signUp(data, setIsAuth))
+	const [signUp, isLoading, error] = useFetch(async data => {
+		const response = await authService.signIn(data)
+
+		if (response?.status) dispatch(actionSetIsAuth(true))
+	})
 
 	return (
 		<form className={classes.authForm} onSubmit={handleSubmit(signUp)}>

@@ -3,14 +3,14 @@ import Input from '../UI/Input/Input';
 import Button from '../UI/Button/Button';
 import classes from '../../styles/modules/Auth.module.css';
 import { Link } from 'react-router-dom';
-import { useContext } from 'react';
 import authService from '../../services/authService';
-import { AuthContext } from '../../context/authContext';
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from 'yup';
 import { useFetch } from '../../hooks/useFetching';
-import Loader from '../UI/Loader/Loader'
+import Loader from '../UI/Loader/Loader';
+import { useDispatch } from 'react-redux';
+import { actionSetIsAuth } from '../../store/reducers/authReducer';
 
 const schema = yup.object({
 	email: yup.string().email('Invalid email format').required('Email field is required'),
@@ -18,8 +18,8 @@ const schema = yup.object({
 })
 
 const SignInForm = () => {
+	const dispatch = useDispatch()
 	const inputStyles = { width: '100%', padding: '10px' }
-	const { setIsAuth } = useContext(AuthContext)
 
 	const {
 		register,
@@ -29,7 +29,11 @@ const SignInForm = () => {
 		resolver: yupResolver(schema)
 	})
 
-	const [signIn, isLoading, error] = useFetch(async data => await authService.signIn(data, setIsAuth))
+	const [signIn, isLoading, error] = useFetch(async data => {
+		const response = await authService.signIn(data)
+
+		if (response?.status) dispatch(actionSetIsAuth(true))
+	})
 
 	return (
 		<form className={classes.authForm} onSubmit={handleSubmit(signIn)}>

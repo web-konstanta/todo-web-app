@@ -1,15 +1,11 @@
-import React, { useContext } from 'react';
+import React from 'react';
 import { Routes, Route, Navigate } from 'react-router-dom';
 import { authRoutes } from './routes/authRoutes';
 import { todoRoutes } from './routes/todoRoutes';
-import { AuthContext } from './context/authContext';
+import { useSelector } from 'react-redux';
 
 const AppRouter = () => {
-	const { isAuth, isLoading } = useContext(AuthContext)
-
-	if (isLoading) {
-		return <h1>Loading...</h1>
-	}
+	const isAuth = useSelector(state => state.auth.isAuth)
 
 	return (
 		<Routes>
