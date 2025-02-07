@@ -1,14 +1,15 @@
-import React, { useContext } from 'react';
+import React from 'react';
 import classes from './Navbar.module.css';
 import { Link } from 'react-router-dom';
-import { AuthContext } from '../../../context/authContext';
+import { useDispatch } from 'react-redux';
+import { actionSetIsAuth } from '../../../store/reducers/authReducer';
 
 const Navbar = () => {
-	const { setIsAuth } = useContext(AuthContext)
+	const dispatch = useDispatch();
 
 	const logout = () => {
 		localStorage.removeItem('accessToken')
-		setIsAuth(false)
+		dispatch(actionSetIsAuth(false))
 	}
 
 	return (

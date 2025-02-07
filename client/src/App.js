@@ -1,26 +1,16 @@
 import { BrowserRouter } from 'react-router-dom';
-import { AuthContext } from './context/authContext';
 import AppRouter from './AppRouter';
 import './App.css';
-import { useEffect, useState } from 'react';
+import { store } from './store';
+import { Provider, useSelector } from 'react-redux';
 
 function App() {
-  const [isAuth, setIsAuth] = useState(false)
-  const [isLoading, setIsLoading] = useState(true)
-
-  useEffect(() => {
-    if (localStorage.getItem('accessToken')) {
-      setIsAuth(true)
-    }
-    setIsLoading(false)
-  }, [])
-
   return (
-    <AuthContext.Provider value={{ isAuth, setIsAuth, isLoading }}>
+    <Provider store={store}>
       <BrowserRouter>
         <AppRouter />
       </BrowserRouter>
-    </AuthContext.Provider>
+    </Provider>
   );
 }
 
